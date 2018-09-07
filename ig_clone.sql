@@ -39,17 +39,27 @@ CREATE TABLE likes
     PRIMARY KEY(user_id, photo_id) -- max 1 like by person
 );
 
-INSERT INTO users (username) VALUES
+CREATE TABLE follows 
+(
+    follower_id INTEGER NOT NULL,
+    followee_id INTEGER NOT NULL, 
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id),
+    PRIMARY KEY(follower_id, followee_id) 
+);
+
+INSERT INTO users(username) VALUES
 ('BlueTheCat'),
 ('CharlieBrown'),
 ('ColtSteele');
 
-INSERT INTO photos (image_url, user_id) VALUES
+INSERT INTO photos(image_url, user_id) VALUES
 ('/sadfasfasf', 1),
 ('/iyuiuyiy', 2),
 ('/vxcbxcaqqweoi', 2);
 
-INSERT INTO comments (comment_text, user_id, photo_id) VALUES
+INSERT INTO comments(comment_text, user_id, photo_id) VALUES
 ('Meow!', 1, 2),
 ('Amazing Shot!', 3, 2),
 ('I <3 This', 2, 1);
@@ -60,6 +70,12 @@ INSERT INTO likes(user_id, photo_id) VALUES
 (1, 2),
 (1, 3),
 (3, 3);
+
+INSERT INTO follows(follower_id, followee_id) VALUES
+(1, 2),
+(1, 3),
+(3, 1),
+(2, 3);
 
 ---------------------------------------------------------
 SELECT photos.image_url, users.username
