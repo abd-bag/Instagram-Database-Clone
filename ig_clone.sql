@@ -18,6 +18,26 @@ CREATE TABLE photos
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+CREATE TABLE comments 
+(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    comment_text VARCHAR(255) NOT NULL,
+    user_id INTEGER NOT NULL,
+    photo_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(photo_id) REFERENCES photos(id)
+);
+
+CREATE TABLE likes 
+(
+    user_id INTEGER NOT NULL,
+    photo_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(photo_id) REFERENCES photos(id),
+    PRIMARY KEY(user_id, photo_id) -- max 1 like by person
+);
 
 INSERT INTO users (username) VALUES
 ('BlueTheCat'),
@@ -29,8 +49,17 @@ INSERT INTO photos (image_url, user_id) VALUES
 ('/iyuiuyiy', 2),
 ('/vxcbxcaqqweoi', 2);
 
+INSERT INTO comments (comment_text, user_id, photo_id) VALUES
+('Meow!', 1, 2),
+('Amazing Shot!', 3, 2),
+('I <3 This', 2, 1);
 
-
+INSERT INTO likes(user_id, photo_id) VALUES
+(1, 1),
+(2, 1),
+(1, 2),
+(1, 3),
+(3, 3);
 
 ---------------------------------------------------------
 SELECT photos.image_url, users.username
