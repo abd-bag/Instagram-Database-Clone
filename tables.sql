@@ -92,10 +92,3 @@ INSERT INTO follows(follower_id, followee_id) VALUES
 (1, 3),
 (3, 1),
 (2, 3);
-
-
----------------------------------------------------------
-SELECT photos.image_url, users.username
-FROM photos
-JOIN users
-    ON photos.user_id = users.id;
