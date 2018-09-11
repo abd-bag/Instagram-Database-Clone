@@ -65,6 +65,19 @@ CREATE TABLE photo_tags
     PRIMARY KEY(photo_id, tag_id)
 );
 
+CREATE TABLE unfollows 
+(
+    follower_id INTEGER NOT NULL,
+    followee_id INTEGER NOT NULL, 
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id),
+    PRIMARY KEY(follower_id, followee_id) 
+);
+
+
+/* starter data */
+
 INSERT INTO users(username) VALUES
 ('BlueTheCat'),
 ('CharlieBrown'),
